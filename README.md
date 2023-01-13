@@ -5,8 +5,9 @@
 - Bottom Navigation
 - App Bar
 - Drawer Navigation
+
 - Fav with Snack bar
 
 
 ## Screenshot
-![jetpackcompose](https://user-images.githubusercontent.com/22006238/212368415-5702e8e8-caae-4a83-854b-78c0ef024bf8.png)
+![rsz_jetpackcompose](https://user-images.githubusercontent.com/22006238/212368899-67846433-7590-4b5c-b6d8-3c6db610d2d4.png)
