@@ -10,4 +10,4 @@
 
 
 ## Screenshot
-![rsz_jetpackcompose](https://user-images.githubusercontent.com/22006238/212368899-67846433-7590-4b5c-b6d8-3c6db610d2d4.png)
+<img width="341" alt="image" src="https://user-images.githubusercontent.com/22006238/212369658-331d7388-5dde-40fb-9e65-6a7befd3f2b8.png">
