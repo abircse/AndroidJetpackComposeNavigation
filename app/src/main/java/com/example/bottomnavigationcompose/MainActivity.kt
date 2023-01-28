@@ -107,13 +107,13 @@ class MainActivity : ComponentActivity() {
             NavigationItems.Settings
         )
 
-        BottomNavigation(backgroundColor = Color.White, contentColor = Color.Black) {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
+        val isBottomBarItemDestination = menuItem.any { it.route == currentRoute }
 
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentRoute = navBackStackEntry?.destination?.route
-            val isBottomBarItemDestination = menuItem.any { it.route == currentRoute }
-            /** if item from list item used in bottom bar then only show bottom navigation bar unless it will hide **/
-            if (isBottomBarItemDestination){
+        /** if item from list item used in bottom bar then only show bottom navigation bar unless it will hide **/
+        if (isBottomBarItemDestination) {
+            BottomNavigation(backgroundColor = Color.White, contentColor = Color.Black) {
                 menuItem.forEach { menuItem ->
                     BottomNavigationItem(
                         icon = {
