@@ -1,7 +1,9 @@
 package com.example.bottomnavigationcompose
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
@@ -19,9 +21,11 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -51,6 +55,14 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainScreen() {
 
+        var pressedTime: Long = 0
+
+        /** get activity object **/
+        val activity = (LocalContext.current as? Activity)
+
+        /** get context object **/
+        val context = LocalContext.current
+
         /** create a nav controller remember nav host **/
         val navController = rememberNavController()
 
@@ -76,17 +88,22 @@ class MainActivity : ComponentActivity() {
         )
 
         /** Handle back button action if drawer open first it will close drawer **/
-        BackPressHandler(onBackPressed = {
+        BackPressHandler{
             if (scaffoldState.drawerState.isOpen) {
                 coroutineScope.launch {
                     /** to close Drawer help by scaffoldState **/
                     scaffoldState.drawerState.close()
                 }
             } else {
-                /** to close App **/
-                finishAffinity()
+                if (pressedTime + 2000 > System.currentTimeMillis()) {
+                    /** to close App **/
+                    finishAffinity()
+                } else {
+                    Toast.makeText(context, "Press back again to exit", Toast.LENGTH_SHORT).show()
+                }
+                pressedTime = System.currentTimeMillis()
             }
-        })
+        }
     }
 
     /** Content Area is Center part between TopAppbar & BottomNav bar **/
