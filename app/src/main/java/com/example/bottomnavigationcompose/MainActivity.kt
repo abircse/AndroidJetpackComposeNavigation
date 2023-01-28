@@ -111,32 +111,35 @@ class MainActivity : ComponentActivity() {
 
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
-
-            menuItem.forEach { menuItem ->
-                BottomNavigationItem(
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = menuItem.icon),
-                            contentDescription = menuItem.title
-                        )
-                    },
-                    label = { Text(text = menuItem.title) },
-                    selectedContentColor = Color.Black,
-                    unselectedContentColor = Color.Black.copy(0.4f),
-                    alwaysShowLabel = true,
-                    selected = currentRoute == menuItem.route,
-                    onClick = {
-                        navController.navigate(menuItem.route) {
-                            navController.graph.startDestinationRoute?.let { route ->
-                                popUpTo(route = route) {
-                                    saveState = true
+            val isBottomBarItemDestination = menuItem.any { it.route == currentRoute }
+            /** if item from list item used in bottom bar then only show bottom navigation bar unless it will hide **/
+            if (isBottomBarItemDestination){
+                menuItem.forEach { menuItem ->
+                    BottomNavigationItem(
+                        icon = {
+                            Icon(
+                                painter = painterResource(id = menuItem.icon),
+                                contentDescription = menuItem.title
+                            )
+                        },
+                        label = { Text(text = menuItem.title) },
+                        selectedContentColor = Color.Black,
+                        unselectedContentColor = Color.Black.copy(0.4f),
+                        alwaysShowLabel = true,
+                        selected = currentRoute == menuItem.route,
+                        onClick = {
+                            navController.navigate(menuItem.route) {
+                                navController.graph.startDestinationRoute?.let { route ->
+                                    popUpTo(route = route) {
+                                        saveState = true
+                                    }
                                 }
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                            launchSingleTop = true
-                            restoreState = true
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     }
